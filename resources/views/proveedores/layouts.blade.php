@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Proveedores</title>
 
-    <!-- Tailwind CSS desde Vite (Laravel 10 usa esto por defecto) -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Tailwind sin build (necesario porque usas clases bg-*, text-*, etc.) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine (opcional) -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Tus assets planos (opcional) -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.x/dist/axios.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
+
 <body class="bg-gray-100 text-gray-800">
     <nav class="bg-white shadow">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -26,4 +37,5 @@
         @yield('content')
     </main>
 </body>
+
 </html>
