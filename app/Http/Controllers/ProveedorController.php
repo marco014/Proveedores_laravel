@@ -9,18 +9,36 @@ use App\Http\Requests\UpdateProveedorRequest;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ProveedorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() : View
+
+    public function index(Request $request) : View 
+    {
+        $buscar = $request->input('buscar');
+
+        $query = Proveedor::query();
+
+        if($buscar) {
+            $query ->where('nombre', 'LIKE', "%{$buscar}%")
+                    ->orWhere('email', 'LIKE', "%{$buscar}%");
+        }
+
+        $proveedores = $query->latest()->paginate(5);
+
+        return view('proveedores.index', compact('proveedores', 'buscar'));
+    }
+
+    /*public function index() : View
     {
         $proveedores = Proveedor::latest()->paginate(5);
         //$proveedores = Proveedor::where('user_id', Auth::id())->latest()->paginate(5);
         return view('proveedores.index', ['proveedores' => $proveedores, 'buscar' => request('buscar')]);
-    }
+    }*/
 
     /**
      * Show the form for creating a new resource.
