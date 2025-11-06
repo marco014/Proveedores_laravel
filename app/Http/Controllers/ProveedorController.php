@@ -21,24 +21,21 @@ class ProveedorController extends Controller
     {
         $buscar = $request->input('buscar');
 
+        //Inicio una consulta al modelo Proveedor
         $query = Proveedor::query();
 
+        //Si hay un termino de busqueda, añadimos el filtro a la consulta
         if($buscar) {
             $query ->where('nombre', 'LIKE', "%{$buscar}%")
                     ->orWhere('email', 'LIKE', "%{$buscar}%");
         }
 
+        //Realizo la consulta (con o sin filtro) y paginamos
         $proveedores = $query->latest()->paginate(5);
 
+        //Envio los resultados y el termino de busqueda a la vista
         return view('proveedores.index', compact('proveedores', 'buscar'));
     }
-
-    /*public function index() : View
-    {
-        $proveedores = Proveedor::latest()->paginate(5);
-        //$proveedores = Proveedor::where('user_id', Auth::id())->latest()->paginate(5);
-        return view('proveedores.index', ['proveedores' => $proveedores, 'buscar' => request('buscar')]);
-    }*/
 
     /**
      * Show the form for creating a new resource.

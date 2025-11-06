@@ -29,7 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    // Rutas para el recurso Proveedor
+    // Rutas del recurso Proveedor
+    /*
+    Se especifica que el parámetro de la ruta debe ser '{proveedor}' (singular).
+    Esto soluciona un problema de Route-Model Binding, asegurando que Laravel
+    inyecte correctamente el modelo Proveedor en el controlador.
+    */
     Route::resource('proveedores', ProveedorController::class)->parameters(['proveedores' => 'proveedor']);
 });
 
