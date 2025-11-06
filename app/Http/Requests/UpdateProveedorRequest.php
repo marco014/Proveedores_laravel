@@ -21,9 +21,11 @@ class UpdateProveedorRequest extends FormRequest
      */
     public function rules(): array
     {
+        $proveedorId = $this->route('proveedor')->id;
+        
         return [
             'nombre' => 'required|string|max:225',
-            'email' => 'required|email|unique:proveedores,email',
+            'email' => 'required|email|unique:proveedores,email,' . $proveedorId,
             'telefono' => 'required|string|max:20',
             'direccion' => 'nullable|string|max:255',
         ];
